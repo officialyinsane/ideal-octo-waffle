@@ -23,6 +23,9 @@ public class WatcherConfiguration {
     @Value("${process-name}")
     private String processName;
 
+    @Value("${priviledged-username}")
+    private String priviledgedUsername;
+
     @Scheduled(cron = "0 * * * * ?")
     public void tick() {
         log.debug("Ticking...");
@@ -36,7 +39,9 @@ public class WatcherConfiguration {
     private Runnable failureHandler() {
         return () -> {
             try {
-                processInvoker().invoke();
+                processInvoker().invoke(
+                        shouldRaisePriviledges(),
+                        priviledgedUsername);
             } catch (IOException e) {
                 log.error("An exception happened launching the application!", e);
             }
@@ -45,5 +50,9 @@ public class WatcherConfiguration {
 
     private ProcessInvoker processInvoker() {
         return new ProcessInvoker(pathToExecutable, arguments);
+    }
+
+    private boolean shouldRaisePriviledges() {
+        return priviledgedUsername != null && !priviledgedUsername.isEmpty();
     }
 }
