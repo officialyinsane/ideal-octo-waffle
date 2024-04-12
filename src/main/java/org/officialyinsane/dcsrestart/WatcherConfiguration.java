@@ -26,6 +26,9 @@ public class WatcherConfiguration {
     @Value("${priviledged-username}")
     private String priviledgedUsername;
 
+    @Value("${priviledged-password}")
+    private String priviledgedPassword;
+
     @Scheduled(cron = "0 * * * * ?")
     public void tick() {
         log.debug("Ticking...");
@@ -41,7 +44,8 @@ public class WatcherConfiguration {
             try {
                 processInvoker().invoke(
                         shouldRaisePriviledges(),
-                        priviledgedUsername);
+                        priviledgedUsername,
+                        priviledgedPassword);
             } catch (IOException e) {
                 log.error("An exception happened launching the application!", e);
             }

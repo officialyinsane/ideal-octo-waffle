@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>org.officialyinsane</groupId>
 	<artifactId>dcs-restart</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<name>dcs-restart</name>
 	<description>dcs-restart</description>
 	<properties>
